@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ECommerceWeb.Models.Product>
+@{
+    ViewData["Title"] = "Vitrin";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Öne Çıkan Ürünler</h2>
+        <a asp-controller="Product" asp-action="Create" class="btn btn-primary">
+            + Yeni Ürün Ekle
+        </a>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 position-relative">
+                    
+                    <a asp-controller="Product" asp-action="Details" asp-route-id="@item.Id" class="text-decoration-none text-dark">
+                        @if (!string.IsNullOrEmpty(item.ImageUrl))
+                        {
+                            <img src="~/images/@item.ImageUrl" class="card-img-top" alt="@item.Title" style="height: 250px; object-fit: cover;">
+                        }
+                        else
+                        {
+                            <img src="https://via.placeholder.com/250?text=Gorsel+Yok" class="card-img-top" alt="Görsel Yok" style="height: 250px; object-fit: cover;">
+                        }
+                    </a>
+                    
+                    <div class="card-body">
+                        <span class="badge bg-secondary mb-2">@item.Category?.Name</span>
+                        
+                        <h5 class="card-title">
+                            <a asp-controller="Product" asp-action="Details" asp-route-id="@item.Id" class="text-decoration-none text-dark fw-bold">
+                                @item.Title
+                            </a>
+                        </h5>
+                        
+                        <p class="card-text text-muted text-truncate">@item.Description</p>
+                        <h4 class="text-success fw-bold mt-3">@item.Price.ToString("C")</h4>
+                    </div>
+                    
+                    <div class="card-footer bg-white border-top-0 d-grid pb-3 gap-2">
+                        <a asp-controller="Product" asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">
+                            Detayları İncele
+                        </a>
+                        <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@item.Id" class="btn btn-success">
+                            <i class="bi bi-cart-plus"></i> Sepete Ekle
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center mt-5" role="alert">
+            Henüz vitrine eklenmiş bir oyun/ürün bulunmuyor. Sağ üstteki butondan ilk ürünü ekleyebilirsiniz!
+        </div>
+    }
+</div>

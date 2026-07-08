@@ -1,0 +1,48 @@
+@model ECommerceWeb.Models.Product
+
+@{
+    ViewData["Title"] = Model.Title + " - Ürün Detayı";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-sm border-0">
+        <div class="row g-0">
+            <div class="col-md-6 bg-light text-center d-flex align-items-center justify-content-center p-4">
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img src="~/images/@Model.ImageUrl" class="img-fluid rounded shadow-sm" alt="@Model.Title" style="max-height: 450px; object-fit: contain;">
+                }
+                else
+                {
+                    <img src="https://via.placeholder.com/450?text=Gorsel+Yok" class="img-fluid rounded" alt="Görsel Yok">
+                }
+            </div>
+
+            <div class="col-md-6 p-5 d-flex flex-column justify-content-between">
+                <div>
+                    <span class="badge bg-primary mb-3 fs-6">@Model.Category?.Name</span>
+                    
+                    <h1 class="display-5 fw-bold mb-3">@Model.Title</h1>
+                    
+                    <h2 class="text-success fw-bold mb-4">@Model.Price.ToString("C")</h2>
+                    
+                    <hr>
+                    
+                    <h5 class="fw-bold text-secondary mt-4">Ürün Açıklaması</h5>
+                    <p class="lead text-muted" style="white-space: pre-line;">
+                        @(string.IsNullOrEmpty(Model.Description) ? "Bu ürün için bir açıklama girilmemiştir." : Model.Description)
+                    </p>
+                </div>
+
+                <div class="mt-5 d-grid gap-2 d-md-flex">
+                    <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.Id" class="btn btn-success btn-lg flex-grow-1 px-4">
+                        <i class="bi bi-cart-plus-fill"></i> Sepete Ekle
+                    </a>
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary btn-lg px-4">
+                        Vitrine Geri Dön
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

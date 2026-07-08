@@ -1,0 +1,59 @@
+@model ECommerceWeb.Models.Product
+
+@{
+    ViewData["Title"] = "Yeni Ürün Ekle";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Yeni Ürün Ekle</h3>
+                </div>
+                <div class="card-body">
+                    
+                    <form asp-action="Create" enctype="multipart/form-data">
+                        
+                        <div class="mb-3">
+                            <label asp-for="Title" class="form-label fw-bold">Ürün Başlığı</label>
+                            <input asp-for="Title" class="form-control" placeholder="Örn: Kablosuz Kulaklık" required />
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Price" class="form-label fw-bold">Fiyat (₺)</label>
+                                <input asp-for="Price" type="number" step="0.01" class="form-control" placeholder="0.00" required />
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="CategoryId" class="form-label fw-bold">Kategori</label>
+                                <select asp-for="CategoryId" class="form-select" asp-items="ViewBag.Categories" required>
+                                    <option value="">-- Kategori Seçin --</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label fw-bold">Ürün Açıklaması</label>
+                            <textarea asp-for="Description" class="form-control" rows="3" placeholder="Ürün detaylarını buraya yazın..."></textarea>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Ürün Görseli (JPG/PNG)</label>
+                            <input type="file" name="imageFile" class="form-control" accept="image/*" />
+                            <small class="text-muted">Lütfen ürün için net bir fotoğraf seçin.</small>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-lg">Ürünü Kaydet ve Yükle</button>
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">İptal ve Geri Dön</a>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
